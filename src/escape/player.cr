@@ -1,9 +1,7 @@
 module Escape
   class Player
-    getter height : LibC::Float
     getter rotation : LibC::Float
-
-    target_model : LibRay::Model
+    delegate height, to: @body
 
     FORWARD_SPEED  =   15
     STRAFE_SPEED   =   10
@@ -13,19 +11,8 @@ module Escape
     GRAVITY        =   10
 
     def initialize
-      @width = 0.48
-      @height = 1.7
-      @length = 0.17
-
-      mesh = LibRay.gen_mesh_cube(
-        width: @width,
-        height: @height,
-        # TODO: tell cray developer binding key "lenght" is typo:
-        lenght: @length
-      )
-      @model = LibRay.load_model_from_mesh(mesh)
-
-      @position = LibRay::Vector3.new(x: 0, y: 0, z: 0)
+      @body = Body.new
+      @position = LibRay::Vector3.new(x: 0, y: height / 2.0, z: 0)
       @rotation = 0
       @jump_timer = Timer.new(JUMP_TIMER)
     end
@@ -33,7 +20,7 @@ module Escape
     def camera_target
       LibRay::Vector3.new(
         x: @position.x,
-        y: @height / 2,
+        y: height / 2.0,
         z: @position.z
       )
     end
@@ -44,6 +31,8 @@ module Escape
       movement(frame_time)
       jump(frame_time)
       gravity(frame_time)
+
+      @body.update(@position, @rotation)
     end
 
     def movement(frame_time)
@@ -103,25 +92,18 @@ module Escape
 
     def gravity(frame_time)
       if grounded?
-        @position.y = @height / 2
+        @position.y = height / 2.0
       else
         @position.y -= GRAVITY * GRAVITY * frame_time
       end
     end
 
     def grounded?
-      @position.y < @height / 2 + 0.1
+      @position.y < height / 2.0 + 0.1
     end
 
     def draw
-      LibRay.draw_model_ex(
-        model: @model,
-        position: @position,
-        rotation_axis: LibRay::Vector3.new(x: 0, y: 1, z: 0),
-        rotation_angle: @rotation,
-        scale: LibRay::Vector3.new(x: 1, y: 1, z: 1),
-        tint: LibRay::GREEN
-      )
+      @body.draw
     end
   end
 end
