@@ -13,9 +13,9 @@ module Escape
     GRAVITY        =   10
 
     def initialize
-      @width = 1.6
-      @height = 5.5
-      @length = 0.75
+      @width = 0.48
+      @height = 1.7
+      @length = 0.17
 
       mesh = LibRay.gen_mesh_cube(
         width: @width,

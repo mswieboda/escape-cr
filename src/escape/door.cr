@@ -1,9 +1,9 @@
 module Escape
   class Door
     def initialize
-      @width = 3
-      @height = 7
-      @length = 0.5
+      @width = 0.91
+      @height = 2
+      @length = 0.05
 
       mesh = LibRay.gen_mesh_cube(
         width: @width,
@@ -27,7 +27,7 @@ module Escape
         rotation_axis: LibRay::Vector3.new(x: 0, y: 1, z: 0),
         rotation_angle: @rotation,
         scale: LibRay::Vector3.new(x: 1, y: 1, z: 1),
-        tint: LibRay::GREEN
+        tint: LibRay::BLUE
       )
     end
   end
