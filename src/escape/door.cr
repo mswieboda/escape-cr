@@ -3,7 +3,7 @@ module Escape
     def initialize
       @width = 0.91
       @height = 2
-      @length = 0.05
+      @length = 0.15
 
       mesh = LibRay.gen_mesh_cube(
         width: @width,
