@@ -1,6 +1,10 @@
-# TODO: Write documentation for `Escape`
-module Escape
-  VERSION = "0.1.0"
+require "cray"
+require "./escape/*"
 
-  # TODO: Put your code here
+module Escape
+  def self.run
+    Game.new.run
+  end
 end
+
+Escape.run
