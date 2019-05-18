@@ -3,11 +3,13 @@ module Escape
     def initialize
       @player = Player.new
       @camera = Camera.new(@player)
+      @door = Door.new
     end
 
     def update
       @player.update
       @camera.update
+      @door.update
     end
 
     def draw
@@ -16,6 +18,8 @@ module Escape
       LibRay.draw_grid(100, 1)
 
       @player.draw
+
+      @door.draw
 
       LibRay.end_3d_mode
     end

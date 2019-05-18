@@ -13,17 +13,17 @@ module Escape
     GRAVITY        =   10
 
     def initialize
-      @width = 3
-      @height = 7
-      @length = 3
+      @width = 1.6
+      @height = 5.5
+      @length = 0.75
 
-      target_mesh = LibRay.gen_mesh_cube(
+      mesh = LibRay.gen_mesh_cube(
         width: @width,
         height: @height,
         # TODO: tell cray developer binding key "lenght" is typo:
         lenght: @length
       )
-      @target_model = LibRay.load_model_from_mesh(target_mesh)
+      @model = LibRay.load_model_from_mesh(mesh)
 
       @position = LibRay::Vector3.new(x: 0, y: 0, z: 0)
       @rotation = 0
@@ -115,7 +115,7 @@ module Escape
 
     def draw
       LibRay.draw_model_ex(
-        model: @target_model,
+        model: @model,
         position: @position,
         rotation_axis: LibRay::Vector3.new(x: 0, y: 1, z: 0),
         rotation_angle: @rotation,
